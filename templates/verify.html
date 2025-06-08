@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verify 2FA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Enter Verification Code</h1>
+    </header>
+    <main>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <p class="message">{{ messages[0] }}</p>
+            {% endif %}
+        {% endwith %}
+        <form method="post">
+            <label>Code:</label><input type="text" name="code" required><br>
+            <input type="submit" value="Verify">
+        </form>
+        <form method="post">
+            <input type="hidden" name="action" value="resend">
+            <input type="submit" value="Resend OTP" class="resend-btn">
+        </form>
+    </main>
+</body>
+</html>
