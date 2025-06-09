@@ -1,45 +1,68 @@
-## Setup Instructions
+# Two-Factor Authentication System Using Flask and Twilio ![Flask-2FA System](https://img.shields.io/badge/Flask-2FA%2520System-blue)
 
-### 1. Install Python
-- Download from [python.org](https://www.python.org/).
-- Verify: `python --version`.
+A secure Two-Factor Authentication (2FA) system for web applications built with Flask and Twilio's SMS API. This project implements an additional security layer by requiring users to verify their login attempts with a one-time password (OTP) delivered to their mobile phones.
 
-### 2. Clone or Set Up Project
-- Place files in a directory (e.g., `C:\Users\bharg\OneDrive\Desktop\SVC Projects\two-factor-auth-system`).
+## Features
 
-### 3. Create Virtual Environment
+- **User Registration & Login**: Secure user accounts with username/password  
+- **SMS-based 2FA**: One-Time Passwords sent via Twilio API  
+- **reCAPTCHA Protection**: Google reCAPTCHA integration to prevent bot attacks  
+- **Secure Password Storage**: Password hashing using Werkzeug security  
+- **Session Management**: Secure handling of user sessions  
+- **Profile Management**: Update password and phone number  
+- **OTP Resend with Cooldown**: Prevent OTP spamming with 30-second cooldown  
+---
+## 🧱 System Architecture
 
+![System Architecture](https://i.imgur.com/xyz123.png)
+
+---
+
+## ⚙️ Installation
+
+### Prerequisites
+
+- Python 3.8+
+- A [Twilio](https://www.twilio.com/) account (for sending SMS OTPs)
+- [Google reCAPTCHA](https://www.google.com/recaptcha/about/) site and secret keys
+## 🔧 Setup
+### Create and activate a virtual environment:
+
+```bash
 python -m venv venv
-.venv\Scripts\activate
+source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+```
+### Clone the repository:
 
-### 4. Install Dependencies
+```bash
+git clone https://github.com/yourusername/flask-2fa-system.git
+cd flask-2fa-system
+```
+### Install dependencies:
 
--pip install -r requirements.txt
+```bash
+pip install -r requirements.txt
+```
+### Create a `.env` file and add your credentials:
 
-### 5. Configure Twilio
-Sign up at twilio.com.
-Get:
-Account SID
-Auth Token
-Twilio Phone Number (e.g., +1234567890).
-
-### Create .env in the project root:
-
-TWILIO_ACCOUNT_SID=your_account_sid
-TWILIO_AUTH_TOKEN=your_auth_token
+```env
+SECRET_KEY=your_secret_key_here
+TWILIO_ACCOUNT_SID=your_twilio_account_sid
+TWILIO_AUTH_TOKEN=your_twilio_auth_token
 TWILIO_PHONE_NUMBER=+1234567890
-SECRET_KEY=your_random_secret_key  # e.g., "mysecret123"
+RECAPTCHA_SECRET_KEY=your_recaptcha_secret_key
+```
+### Initialize the database:
 
-### 6. Verify Phone Number (Trial Mode)
-Go to twilio.com/user/account/phone-numbers/verified.
-Add your number (e.g., +91868827XXXX) and verify it with the SMS code.
+```bash
+python
+>>> from app import db, app
+>>> app.app_context().push()
+>>> db.create_all()
+>>> exit()
+```
+### Run the application:
 
-## How to Run
-### Step 1: Activate Virtual Environment
-.venv\Scripts\activate
-
-### Step 2: Run the Application
+```bash
 python app.py
 
-### Output:
-Open http://127.0.0.1:5000 in your browser.
